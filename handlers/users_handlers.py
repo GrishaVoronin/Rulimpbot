@@ -1,7 +1,8 @@
-from loader import dp, types
-from data.database import users_db as db
 from aiogram.types.chat import ChatType
+
 from core.olymps_parser.olymps_parser import OlympsParser
+from data.database import users_db as db
+from loader import dp, types
 
 
 @dp.message_handler(ChatType.is_private, commands='start')
