@@ -7,13 +7,15 @@ class OlympItem:
     link: str
     olymp_title: str
     about_info: str
+    forms_participates: str
     date_info: str
     rating: float
 
-    def __init__(self, link: str, olymp_title: str, about_info: str, date_info: str, rating: float):
+    def __init__(self, link: str, olymp_title: str, about_info: str, forms_participates: str, date_info: str, rating: float):
         self.link = link
         self.olymp_title = olymp_title
         self.about_info = about_info
+        self.forms_participates = forms_participates
         self.date_info = date_info
         self.rating = rating
 
