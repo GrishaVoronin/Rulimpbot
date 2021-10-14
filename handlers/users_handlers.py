@@ -3,6 +3,7 @@ from data.database import users_db as db
 from aiogram.types.chat import ChatType
 from markups import reply, inline
 from states import UserParams
+from core.olymps_parser.olymps_parser import OlympsParser
 
 users_dict_for_searching_olympiads = {}
 
@@ -36,5 +37,13 @@ async def take_number_1_8(call: types.CallbackQuery):
     user_id = call.from_user.id
     num = call.data.split('_')[1]
     users_dict_for_searching_olympiads[user_id].append(num)
-    #'''МЕСТО ДЛЯ ПАРСЕРА'''
-    users_dict_for_searching_olympiads.pop(user_id, None)\
+    parser = OlympsParser(number_of_olymps=int(num))
+    olymps = parser.get_olymps_by_request(request=users_dict_for_searching_olympiads[user_id][0])  # list[OlympItem]
+
+    for olymp_item in olymps:
+        olymp_title = olymp_item.olymp_title
+        olymp_link = olymp_item.link
+        message_to_user = f'<b>Название:</b> {olymp_title}\n......'
+        await call.message.answer(message_to_user)
+
+    users_dict_for_searching_olympiads.pop(user_id, None)
