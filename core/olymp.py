@@ -21,6 +21,7 @@ class OlympItem:
         self.rating = rating
 
 
+@dataclass
 class FullOlympItem:
     """Имлементирует все данные об олимпиаде (при полном открытии)"""
     olymp_item: OlympItem
