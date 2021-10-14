@@ -13,3 +13,4 @@ async def add_new_user(user_id: int, user_name: str):
                               "VALUES(?, ?)",
                               (user_id, user_name))
             await con.commit()
+
