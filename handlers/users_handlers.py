@@ -12,4 +12,4 @@ async def send_welcome(message: types.Message):
     await db.add_new_user(user_id, user_name)
     parser = OlympsParser(2)
 
-    print(parser.get_olymps_by_request("Ломоносов"))
+    print(parser.get_olymps_by_request(request="Высшая проба"))

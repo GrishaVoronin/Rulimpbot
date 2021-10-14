@@ -12,8 +12,15 @@ class OlympsParser:
         self.number_of_olymps = number_of_olymps
 
     def get_olymps_by_request(self, request: str) -> list[OlympItem]:
-        bs = _get_html_page(request)
+        bs = _get_html_page(urls.get_request_url(request))
+        return OlympsParser._get_olymps_items(self, bs)
 
+    def get_olymps_by_subject(self, subject_id: str):
+        bs = _get_html_page(urls.get_by_subject_url(subject_id))
+        return OlympsParser._get_olymps_items(self, bs)
+
+    @staticmethod
+    def _get_olymps_items(self, bs: BS) -> list[OlympItem]:
         titles_content = _get_item_content(bs_obj=bs, html_tag="span", class_="headline")
         dates_content = _get_item_content(bs_obj=bs, html_tag="span", class_="red")
         links_content = _get_item_content(bs_obj=bs, html_tag="a", class_="none_a black")
@@ -57,8 +64,8 @@ class OlympsParser:
         return len(titles) if len(titles) < self.number_of_olymps else self.number_of_olymps
 
 
-def _get_html_page(request: str) -> BS:
-    page = requests.get(urls.get_request_url(request))
+def _get_html_page(url: str) -> BS:
+    page = requests.get(url)
     return BS(page.text, 'html.parser')
 
 
