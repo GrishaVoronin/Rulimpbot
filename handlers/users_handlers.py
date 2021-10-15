@@ -2,7 +2,8 @@ from loader import dp, types
 from data.database import users_db as db
 from aiogram.types.chat import ChatType
 from markups import reply, inline
-from states import UserParams, GroupParams
+from states import UserParams
+from core.olymps_parser.olymps_parser import OlympsParser
 
 users_dict_for_searching_olympiads = {}
 num_to_subject = {1: 'Русский язык', 2: 'Литература', 3: 'Иностранные языки', 6: 'Математика', 7: 'Информатика', 8: 'История', 9: 'Обществознание', 10: 'География', 11: 'Биология', 12: 'Физика', 13: 'Химия', 14: 'Экономика', 15: 'Право', 16: 'ОБЖ', 17: 'Технология', 18: 'Искусство', 19: 'Физкультура', 20: 'Астрономия', 21: 'Экология', 22: 'ИЗО', 23: 'Предпринимательство', 24: 'Лингвистика', 27: 'Робототехника', 28: 'Психология', 31: 'Черчение'}
@@ -14,6 +15,7 @@ async def send_welcome(message: types.Message):
     await db.add_new_user(user_id, user_name)
     await message.answer("Приветствую! Я бот, который поможет тебе не пропустить олимпиады по важным для тебя предметам! Введи команду /help, чтобы подробнее ознакомиться с моим функционалом", reply_markup=reply.default_user_markup)
 
+    
 @dp.message_handler(ChatType.is_private, commands='help')
 async def tell_about_functions(message: types.Message):
     await message.answer("У меня есть 2 основные функции:\n"
@@ -24,11 +26,11 @@ async def tell_about_functions(message: types.Message):
                         "Эта функция поможет найти олимпиады по выбранному предмету с рейтингом выше 8.0, регистрация на которые начнется в ближайшую неделю.")
 
 
-
 @dp.message_handler(ChatType.is_private, text = '🔍 Найти олимпиаду')
 async def find_an_olympiad(message: types.Message):
     await message.answer('Ведите название олимпиады:')
     await UserParams.Setolympiad.set()
+
 
 @dp.message_handler(state=UserParams.Setolympiad)
 async def takeolimpyad(message: types.Message, state: UserParams.Setolympiad):
@@ -38,13 +40,14 @@ async def takeolimpyad(message: types.Message, state: UserParams.Setolympiad):
     await message.answer(f"Выберете количество олимпиад, которые получите по запросу <b>{text}</b>:", reply_markup=inline.numbers_1_8)
     await state.finish()
 
+
 @dp.callback_query_handler(text_contains='number_')
-async def takenumber_1_8(call: types.CallbackQuery):
+async def take_number_1_8(call: types.CallbackQuery):
     await call.message.edit_reply_markup(reply_markup=None)
     user_id = call.from_user.id
     num = call.data.split('_')[1]
     users_dict_for_searching_olympiads[user_id].append(num)
-    #'''МЕСТО ДЛЯ ПАРСЕРА'''
+    # '''Парсер по запросу'''
     users_dict_for_searching_olympiads.pop(user_id, None)
 
 @dp.message_handler(ChatType.is_private, text = '🔍 Олимпиады по предмету')
@@ -58,14 +61,5 @@ async def take_subject(call: types.CallbackQuery):
     await call.message.edit_reply_markup(reply_markup=None)
     unicum_num_subject = int(call.data.split('_')[1])
     await call.message.answer(f'Вот, какие олимпиады по предмету <b>{num_to_subject[unicum_num_subject]}</b> с рейтингом больше 8.0 мне удалось найти:')
-    # '''Место для парсера'''
-
-
-
-
-
-
-
-
-
-
+    # '''Парсер для предметов'''
+    users_dict_for_searching_olympiads.pop(user_id, None)
