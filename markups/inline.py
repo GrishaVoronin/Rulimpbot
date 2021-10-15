@@ -1,6 +1,6 @@
 from aiogram import types
-#Карчевский лох
-olympiads = types.InlineKeyboardMarkup(
+
+technical_olympiads = types.InlineKeyboardMarkup(
     inline_keyboard=[
         [
             types.InlineKeyboardButton(text="Математика", callback_data='olymp_6'),
@@ -41,6 +41,10 @@ olympiads = types.InlineKeyboardMarkup(
         [
             types.InlineKeyboardButton(text="Физкультура", callback_data='olymp_19'),
         ],
+    ]
+)
+humanitarian_olympiads = types.InlineKeyboardMarkup(
+    inline_keyboard=[
         [
             types.InlineKeyboardButton(text="Русский язык", callback_data='olymp_1'),
         ],

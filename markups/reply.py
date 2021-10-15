@@ -6,7 +6,7 @@ default_user_markup = types.ReplyKeyboardMarkup(
             types.KeyboardButton(text='🔍 Найти олимпиаду'),
         ],
         [
-            types.KeyboardButton(text='/setsubjects'),
+            types.KeyboardButton(text='🔍 Олимпиады по предмету'),
         ],
     ],
     resize_keyboard=True
