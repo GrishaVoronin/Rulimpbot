@@ -1,6 +1,6 @@
 from aiogram import types
 
-technical_olympiads = types.InlineKeyboardMarkup(
+olympiads = types.InlineKeyboardMarkup(
     inline_keyboard=[
         [
             types.InlineKeyboardButton(text="Математика", callback_data='olymp_6'),
@@ -41,11 +41,7 @@ technical_olympiads = types.InlineKeyboardMarkup(
         [
             types.InlineKeyboardButton(text="Физкультура", callback_data='olymp_19'),
         ],
-    ]
-)
-humanitarian_olympiads = types.InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
+[
             types.InlineKeyboardButton(text="Русский язык", callback_data='olymp_1'),
         ],
         [
@@ -84,7 +80,7 @@ humanitarian_olympiads = types.InlineKeyboardMarkup(
     ]
 )
 
-numbers_1_8 = types.InlineKeyboardMarkup(
+numbers_1_10 = types.InlineKeyboardMarkup(
     inline_keyboard=[
         [
             types.InlineKeyboardButton(text="1", callback_data='number_1'),
@@ -101,6 +97,10 @@ numbers_1_8 = types.InlineKeyboardMarkup(
         [
             types.InlineKeyboardButton(text="7", callback_data='number_7'),
             types.InlineKeyboardButton(text="8", callback_data='number_8'),
+        ],
+        [
+            types.InlineKeyboardButton(text="9", callback_data='number_9'),
+            types.InlineKeyboardButton(text="10", callback_data='number_10'),
         ]
     ]
 )
