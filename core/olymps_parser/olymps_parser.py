@@ -47,16 +47,19 @@ class OlympsParser:
         found_olymps = []
 
         for i in range(OlympsParser._get_olymps_count(self, titles)):
-            found_olymps.append(
-                OlympItem(
-                    olymp_title=titles[i],
-                    link=f"{urls.BASE_URL}{links[i][1:]}",
-                    about_info=abouts[i],
-                    forms_participates=forms[i],
-                    date_info=dates[i],
-                    rating=float(ratings[i].replace(',', '.'))
+            try:
+                found_olymps.append(
+                    OlympItem(
+                        olymp_title=titles[i],
+                        link=f"{urls.BASE_URL}{links[i][1:]}",
+                        about_info=abouts[i],
+                        forms_participates=forms[i],
+                        date_info=dates[i],
+                        rating=float(ratings[i].replace(',', '.'))
+                    )
                 )
-            )
+            except IndexError:
+                pass
         return found_olymps
 
     @staticmethod
